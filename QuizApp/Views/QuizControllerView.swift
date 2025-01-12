@@ -9,7 +9,15 @@ import SwiftUI
 
 
 struct QuizControllerView : View {
+    
+    @EnvironmentObject var quizViewModel: QuizViewModel
+    
     var body: some View {
-        Text("Hello World!")
+        if(!quizViewModel.reachedEndOfQuiz){
+            QuizQuestionView().environmentObject(quizViewModel)
+        }
+        else{
+            QuizResultView().environmentObject(quizViewModel)
+        }
     }
 }

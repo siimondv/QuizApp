@@ -9,43 +9,41 @@ import SwiftUI
 
 struct QuizIntroductionView: View {
     @StateObject var quizViewModel =  QuizViewModel()
-    
-    
+
     var body: some View {
-        ZStack {
-            LinearGradient(
-                gradient: Gradient(colors: [Color.orange, Color.yellow]),
-                startPoint: .top,
-                endPoint: .bottom
-            )
-            .ignoresSafeArea()
-            
-            VStack(spacing: 30) {
-                Text("Welcome to the Quiz!")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .multilineTextAlignment(.center)
-                    .padding(.top, 50)
-                
-                Text("""
-You are about to take a quiz of 10 questions. Test your knowledge and challenge yourself!
-Good luck and have fun! 🎯
-""")
-                    .font(.title3)
-                    .fontWeight(.medium)
-                    .foregroundColor(.white.opacity(0.9))
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal)
-                
-                Spacer()
-                
-                NavigationLink {
-                    QuizControllerView()
-                        .environmentObject(quizViewModel)
-                } label: {
-                    Button(action: {
-                    }) {
+        NavigationView {
+            ZStack {
+                LinearGradient(
+                    gradient: Gradient(colors: [Color.orange, Color.yellow]),
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .ignoresSafeArea()
+
+                VStack(spacing: 30) {
+                    Text("Welcome to the Quiz!")
+                        .font(.largeTitle)
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.center)
+                        .padding(.top, 50)
+
+                    Text("""
+                        You are about to take a quiz of 10 questions. Test your knowledge and challenge yourself!
+                        Good luck and have fun! 🎯
+                        """)
+                        .font(.title3)
+                        .fontWeight(.medium)
+                        .foregroundColor(.white.opacity(0.9))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+
+                    Spacer()
+
+                    NavigationLink {
+                        QuizControllerView()
+                            .environmentObject(quizViewModel)
+                    } label: {
                         Text("Start Quiz")
                             .font(.headline)
                             .fontWeight(.bold)
@@ -59,9 +57,8 @@ Good luck and have fun! 🎯
                     .padding(.horizontal)
                     .padding(.bottom, 50)
                 }
-                
+                .padding()
             }
-            .padding()
         }
     }
 }
@@ -71,3 +68,4 @@ struct QuizIntroductionView_Previews: PreviewProvider {
         QuizIntroductionView()
     }
 }
+    

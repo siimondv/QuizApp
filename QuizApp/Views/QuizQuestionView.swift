@@ -8,11 +8,9 @@
 import SwiftUI
 
 struct QuizQuestionView: View {
-    @State private var progress = 3
-    @State private var totalQuestions = 10
-    @State private var questionTitle = "What is the capital of France?"
-    @State private var answers = ["Paris", "Berlin", "Madrid", "Rome"]
     
+    @EnvironmentObject var quizViewModel: QuizViewModel
+        
     var body: some View {
         ZStack {
             LinearGradient(
@@ -24,16 +22,16 @@ struct QuizQuestionView: View {
             
             VStack(alignment: .leading, spacing: 20) {
                 HStack {
-                    ProgressView(value: Double(progress), total: Double(totalQuestions))
+                    ProgressView(value: Double(quizViewModel.progressCount), total: Double(quizViewModel.totalQuesitons))
                         .progressViewStyle(LinearProgressViewStyle(tint: .white))
                         .frame(maxWidth: .infinity)
-                    Text("\(progress)/\(totalQuestions)")
+                    Text("\(quizViewModel.progressCount)/\(quizViewModel.totalQuesitons)")
                         .font(.headline)
                         .foregroundColor(.white)
                         .bold()
                 }
                 
-                Text(questionTitle)
+                Text(quizViewModel.currenQuestionDetails.question)
                     .font(.title)
                     .fontWeight(.bold)
                     .foregroundColor(.white)
@@ -41,8 +39,13 @@ struct QuizQuestionView: View {
                     .padding(.top, 10)
                 
                 VStack(spacing: 15) {
-                    ForEach(answers, id: \.self) { answer in
-                        AnswerBox(answer: answer)
+                    ForEach(quizViewModel.allAnswersFromCurrentQuestion, id: \.self) { answer in
+                        AnswerBox(answer: answer){ isCorrect in
+                            if isCorrect {
+                                quizViewModel.selectedCorrectAnswer()
+                            }
+                            
+                        }
                     }
                 }
                 .padding(.top, 10)
@@ -56,10 +59,12 @@ struct QuizQuestionView: View {
 }
 
 struct AnswerBox: View {
-    var answer: String
+    @State private var isSelected: Bool = false
+    var answer: Answer
+    var onSelect: (Bool) -> Void
     
     var body: some View {
-        Text(answer)
+        Text(answer.answer)
             .frame(maxWidth: .infinity)
             .padding()
             .background(Color.white.opacity(0.9))
@@ -67,10 +72,19 @@ struct AnswerBox: View {
             .shadow(color: .black.opacity(0.3), radius: 8, x: 0, y: 4)
             .overlay(
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.orange.opacity(0.8), lineWidth: 2)
+                    .stroke(
+                        isSelected ? (answer.isCorrect ? Color.green : Color.red) : Color.orange.opacity(0.8),
+                        lineWidth: 2
+                    )
             )
             .font(.headline)
             .foregroundColor(Color.orange)
+            .onTapGesture {
+                if !isSelected { // Prevent multiple selections
+                    isSelected = true
+                    onSelect(answer.isCorrect)
+                }
+            }
     }
 }
 
