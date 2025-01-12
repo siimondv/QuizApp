@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct QuizIntroductionView: View {
+    @StateObject var quizViewModel =  QuizViewModel()
+    
+    
     var body: some View {
         ZStack {
             LinearGradient(
@@ -37,20 +40,26 @@ Good luck and have fun! 🎯
                 
                 Spacer()
                 
-                Button(action: {
-                }) {
-                    Text("Start Quiz")
-                        .font(.headline)
-                        .fontWeight(.bold)
-                        .foregroundColor(Color.orange)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.white)
-                        .cornerRadius(15)
-                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+                NavigationLink {
+                    QuizControllerView()
+                        .environmentObject(quizViewModel)
+                } label: {
+                    Button(action: {
+                    }) {
+                        Text("Start Quiz")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.orange)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.white)
+                            .cornerRadius(15)
+                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 50)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 50)
+                
             }
             .padding()
         }
