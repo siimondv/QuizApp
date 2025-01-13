@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct QuizResultView: View {
-    @State private var totalQuestions = 10
-    @State private var correctAnswers = 8
+    
+    @EnvironmentObject var quizViewModel: QuizViewModel
     
     var body: some View {
         ZStack {
@@ -37,7 +37,7 @@ struct QuizResultView: View {
                         .font(.headline)
                         .foregroundColor(.white.opacity(0.9))
                     
-                    Text("\(correctAnswers) / \(totalQuestions)")
+                    Text("\(quizViewModel.correctAnswers) / \(quizViewModel.totalQuesitons)")
                         .font(.system(size: 50, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
                 }

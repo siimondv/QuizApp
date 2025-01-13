@@ -51,6 +51,23 @@ struct QuizQuestionView: View {
                 .padding(.top, 10)
                 
                 Spacer()
+                
+                Button(action: {
+                                    quizViewModel.getNextQuestion()
+                                }) {
+                                    Text("Next Question")
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .foregroundColor(Color.orange)
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color.customYellow)
+                                        .cornerRadius(15)
+                                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+                                }
+                                
+                
+                
             }
             .padding()
             .navigationTitle("Quiz")
@@ -74,13 +91,13 @@ struct AnswerBox: View {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(
                         isSelected ? (answer.isCorrect ? Color.green : Color.red) : Color.orange.opacity(0.8),
-                        lineWidth: 2
+                        lineWidth: isSelected ? 4 : 2
                     )
             )
             .font(.headline)
             .foregroundColor(Color.orange)
             .onTapGesture {
-                if !isSelected { // Prevent multiple selections
+                if !isSelected {
                     isSelected = true
                     onSelect(answer.isCorrect)
                 }

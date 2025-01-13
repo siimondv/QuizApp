@@ -12,8 +12,8 @@ final class QuizViewModel : ObservableObject
     let totalQuesitons = 10
     private var questionDetails: [QuestionDetails] = []
     private var currentQuestionIndex = -1
-    private var correctAnswers = 0
-    @Published private(set) var progressCount = 1
+    @Published private(set) var correctAnswers = 0
+    @Published private(set) var progressCount = 0
     @Published private(set) var reachedEndOfQuiz = false
     @Published private(set) var currenQuestionDetails: QuestionDetails = .empty
     @Published private(set) var allAnswersFromCurrentQuestion: [Answer] = []
